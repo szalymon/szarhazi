@@ -2,5 +2,8 @@
 
 class Shape {
 
+    id: number;
+    
+    
 }
 
