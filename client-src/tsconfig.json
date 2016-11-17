@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "outFile": "../public/lib/client-app.js",
+        "watch": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
