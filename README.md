@@ -1,3 +1,6 @@
-# szarhazi
+# Shapefile editor
 
-## Poject setup
+
+```bash
+npm install
+```
