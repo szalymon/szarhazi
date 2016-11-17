@@ -3,6 +3,12 @@ logs
 *.log
 npm-debug.log*
 
+# typings files
+typings
+
+# visual studio code config files
+.vscode
+
 # Runtime data
 pids
 *.pid

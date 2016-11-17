@@ -1,1 +1,3 @@
 # szarhazi
+
+## Poject setup
