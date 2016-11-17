@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
         "module": "amd",
-        "outFile": "../public/lib/client-app.js",
+        "outFile": "../public/lib/all.js",
+        "declaration": true,
         "watch": true
     },
     "exclude": [

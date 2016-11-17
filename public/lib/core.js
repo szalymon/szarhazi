@@ -1,5 +1,4 @@
-/// <reference path="./client-app.js" />
-
+/// <reference path="all.d.ts" />
 $(function () {
 
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -11,7 +10,7 @@ $(function () {
     console.log("Client is running...");
 
     var canvas = document.getElementById('mainCanvas');
-
+    canvas.
     paper.setup(canvas);
 
     var path = new paper.Path();
@@ -26,5 +25,5 @@ $(function () {
     // Draw the view now:
     paper.view.draw();
 
-    ShapeParser.parseFile(null);
+    Shapes.ShapeParser.parseFile(null);
 });

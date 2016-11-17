@@ -1,0 +1,52 @@
+#mainCanvas {
+    height: 400px;
+    width: 800px;
+}
+
+.canvasHolder {
+    /* border: 2px solid black;
+    box-shadow: black 1px 1px 2px 2px;*/
+    /*
+    background: #FAFAFA;
+    border-radius: 5px;*/
+    width: 800px;
+    padding: 0px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+
+    box-shadow: 3px 3px 15px -5px black;
+}
+
+
+.mainHolder {
+    background: #EEEEEE;
+    border-radius: 0px 0px 15px 15px;
+    height: 90%;
+    min-height: 550px; 
+    box-shadow: inset 0px 0px 10px -5px #000000;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+.container {
+    border-radius: 0px 0px 15px 15px;
+    height: 100%;
+    width: 100%;
+    min-height: 600px;
+}
+
+.right-button {
+    float: right;
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}

@@ -1,10 +1,6 @@
-
-
-class Shape {
-
-    id: number;
-       
+module Shapes {
+    export class Shape {
+        id: number;
+        polygons: Polygon[];
+    }
 }
-
-
-export {Shape};
