@@ -1,3 +1,5 @@
+/// <reference path="./client-app.js" />
+
 $(function () {
 
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -23,7 +25,6 @@ $(function () {
     path.lineTo(start.add([200, -50]));
     // Draw the view now:
     paper.view.draw();
-
 
     ShapeParser.parseFile(null);
 });
