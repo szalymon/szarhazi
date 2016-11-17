@@ -13,3 +13,11 @@ var Shape = (function () {
     }
     return Shape;
 }());
+var ShapeParser = (function () {
+    function ShapeParser() {
+    }
+    ShapeParser.parseFile = function (file) {
+        console.log('File is under parsing...');
+    };
+    return ShapeParser;
+}());
