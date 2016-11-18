@@ -10,7 +10,6 @@ $(function () {
     console.log("Client is running...");
 
     var canvas = document.getElementById('mainCanvas');
-    canvas.
     paper.setup(canvas);
 
     var path = new paper.Path();
@@ -26,4 +25,6 @@ $(function () {
     paper.view.draw();
 
     Shapes.ShapeParser.parseFile(null);
+
+    $('#panelForDragging').draggable({handle: ".panel-heading"});
 });
