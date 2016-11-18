@@ -4,7 +4,6 @@
 
 import shapefile = require('shapefile');
 import {CanvasController} from "CanvasController";
-
 import Paper = require('paper'); 
 
 $(function () {

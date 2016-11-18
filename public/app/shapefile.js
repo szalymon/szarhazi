@@ -1,26 +1,59 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 define(["require", "exports"], function (require, exports) {
     "use strict";
     var shapefile;
     (function (shapefile) {
-        var Point = (function () {
-            function Point() {
+        ;
+        var Record = (function () {
+            function Record() {
             }
-            return Point;
+            return Record;
         }());
-        shapefile.Point = Point;
-        var Polygon = (function () {
-            function Polygon() {
-            }
-            return Polygon;
-        }());
-        shapefile.Polygon = Polygon;
+        shapefile.Record = Record;
         var Shape = (function () {
             function Shape() {
             }
             return Shape;
         }());
         shapefile.Shape = Shape;
-        ;
+        var Point = (function (_super) {
+            __extends(Point, _super);
+            function Point(x, y) {
+                _super.call(this);
+                this.type = 1 /* POINT */;
+                this.x = x;
+                this.y = y;
+            }
+            return Point;
+        }(Shape));
+        shapefile.Point = Point;
+        var PolyLine = (function (_super) {
+            __extends(PolyLine, _super);
+            function PolyLine() {
+                _super.apply(this, arguments);
+            }
+            return PolyLine;
+        }(Shape));
+        shapefile.PolyLine = PolyLine;
+        var Polygon = (function (_super) {
+            __extends(Polygon, _super);
+            function Polygon() {
+                _super.call(this);
+                this.type = 5 /* POLYGON */;
+            }
+            return Polygon;
+        }(Shape));
+        shapefile.Polygon = Polygon;
+        var World = (function () {
+            function World() {
+            }
+            return World;
+        }());
+        shapefile.World = World;
         var ShapeParser = (function () {
             function ShapeParser() {
             }
@@ -29,8 +62,98 @@ define(["require", "exports"], function (require, exports) {
                 return null;
             };
             ShapeParser.parse = function (arrayBuffer, fileName) {
-                var o = {};
+                var world = new World();
                 var dv = new DataView(arrayBuffer);
+                var idx = 0;
+                world.fileCode = dv.getInt32(idx, false);
+                File;
+                if (world.fileCode != 0x0000270a) {
+                    throw (new Error("Unknown file code: " + world.fileCode));
+                }
+                idx += 6 * 4;
+                world.wordLength = dv.getInt32(idx, false);
+                world.byteLength = world.wordLength * 2;
+                idx += 4;
+                world.version = dv.getInt32(idx, true);
+                idx += 4;
+                world.shapeType = dv.getInt32(idx, true);
+                idx += 4;
+                world.minX = dv.getFloat64(idx, true);
+                world.minY = dv.getFloat64(idx + 8, true);
+                world.maxX = dv.getFloat64(idx + 16, true);
+                world.maxY = dv.getFloat64(idx + 24, true);
+                world.minZ = dv.getFloat64(idx + 32, true);
+                world.maxZ = dv.getFloat64(idx + 40, true);
+                world.minM = dv.getFloat64(idx + 48, true);
+                world.maxM = dv.getFloat64(idx + 56, true);
+                idx += 8 * 8;
+                world.records = [];
+                while (idx < world.byteLength) {
+                    var record = new Record();
+                    record.number = dv.getInt32(idx, false);
+                    idx += 4;
+                    record.length = dv.getInt32(idx, false);
+                    idx += 4;
+                    try {
+                        record.shape = this.parseShape(dv, idx, record.length);
+                    }
+                    catch (e) {
+                        console.log(e, record);
+                    }
+                    idx += record.length * 2;
+                    world.records.push(record);
+                }
+                return world;
+            };
+            ShapeParser.parseShape = function (dv, idx, length) {
+                //var i = 0, c = null;
+                var i;
+                var shape;
+                var shapeType = dv.getInt32(idx, true);
+                idx += 4;
+                var byteLen = length * 2;
+                switch (shapeType) {
+                    case 0 /* NULL */:
+                        break;
+                    case 1 /* POINT */:
+                        shape = new Point(dv.getFloat64(idx, true), dv.getFloat64(idx + 8, true));
+                        break;
+                    case 3 /* POLYLINE */: // Polyline (MBR, partCount, pointCount, parts, points)
+                    case 5 /* POLYGON */:
+                        shape = new Polygon();
+                        var polygon = shape;
+                        polygon.minX = dv.getFloat64(idx, true);
+                        polygon.minY = dv.getFloat64(idx + 8, true);
+                        polygon.maxX = dv.getFloat64(idx + 16, true);
+                        polygon.maxY = dv.getFloat64(idx + 24, true);
+                        polygon.parts = new Int32Array(dv.getInt32(idx + 32, true));
+                        polygon.points = new Float64Array(dv.getInt32(idx + 36, true) * 2);
+                        idx += 40;
+                        for (i = 0; i < polygon.parts.length; i++) {
+                            polygon.parts[i] = dv.getInt32(idx, true);
+                            idx += 4;
+                        }
+                        for (i = 0; i < polygon.points.length; i++) {
+                            polygon.points[i] = dv.getFloat64(idx, true);
+                            idx += 8;
+                        }
+                        break;
+                    case 8: // MultiPoint (MBR, pointCount, points)
+                    case 11: // PointZ (X, Y, Z, M)
+                    case 13: // PolylineZ
+                    case 15: // PolygonZ
+                    case 18: // MultiPointZ
+                    case 21: // PointM (X, Y, M)
+                    case 23: // PolylineM
+                    case 25: // PolygonM
+                    case 28: // MultiPointM
+                    case 31:
+                        throw new Error("Shape type not supported: "
+                            + shape.type);
+                    default:
+                        throw new Error("Unknown shape type at " + (idx - 4) + ': ' + shape.type);
+                }
+                return shape;
             };
             return ShapeParser;
         }());
