@@ -1,6 +1,7 @@
 #mainCanvas {
     height: 400px;
-    width: 800px;
+    width: 770px;
+    border: 1px solid black;
 }
 
 .canvasHolder {

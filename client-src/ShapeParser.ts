@@ -11,7 +11,6 @@ module Shapes {
 
         static parseFile(file: File): Shape {
             console.log('File is under parsing...');
-
             
             return null;
         }
@@ -19,8 +18,6 @@ module Shapes {
         static parse(arrayBuffer:ArrayBuffer, fileName) {
             let o = {};
             let dv = new DataView(arrayBuffer);
-
-            
         }
     }
 }
