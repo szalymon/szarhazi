@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
         "module": "amd",
-        "outFile": "../public/lib/all.js",
-        "declaration": true,
+        "target": "es5",
+        "outDir": "../public/app",
+        "declaration": false,
         "watch": true
     },
     "exclude": [
