@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap/dist/css/bootstrap-theme.min.css">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 
@@ -26,49 +26,49 @@
     <div class="mainHolder">
         <div class="container">
             <!--<div class="row">-->
-                <!--<div class="col-md-12">-->
-                    <div class="panel-group">
-                        <div id="panelForDragging" class="panel panel-default canvasHolder">
-                            <div class="panel-heading">
-                                Name of the shape
-                                <button type="button" class="btn btn-default" aria-label="">
+            <!--<div class="col-md-12">-->
+            <div class="panel-group">
+                <div id="panelForDragging" class="panel panel-default canvasHolder">
+                    <div class="panel-heading">
+                        Name of the shape
+                        <button type="button" class="btn btn-default" aria-label="">
                                         <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
                                     </button>
 
-                                <button type="button" class="btn btn-default" aria-label="">
+                        <button type="button" class="btn btn-default" aria-label="">
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Point
                                     </button>
 
-                                <button type="button" class="btn btn-default" aria-label="">
+                        <button type="button" class="btn btn-default" aria-label="">
                                         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                     </button>
 
-                                <button type="button" class="btn btn-default" aria-label="">
+                        <button type="button" class="btn btn-default" aria-label="">
                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                     </button>
 
-                                <input id="fileLoaderBtn" type="file" class="pull-right">
+                        <input id="fileLoaderBtn" type="file" class="pull-right">
 
-                            </div>
-                            <div class="panel-body">
-                                <canvas id="mainCanvas" resize></canvas>
-                            </div>
-                        </div>
                     </div>
-                <!--</div>-->
+                    <div class="panel-body">
+                        <canvas id="mainCanvas" resize></canvas>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
             <!--</div>-->
         </div>
     </div>
 
+    <!-- <script src="paper/dist/paper-full.min.js"></script> -->
 
-    <script src="paper/dist/paper-full.min.js"></script>
     <script src="jquery/dist/jquery.min.js"></script>
-    <script src="jquery-ui/jquery-ui.min.js"></script>
+    <script src="jqueryui/jquery-ui.min.js"></script>
+
     <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-    
-    <!-- <script src="lib/all.js"></script> -->
-    <!-- <script src="lib/core.js"></script> -->
-    <script  type="text/javascript" src="lib/require.js" data-main="app/initializer.js"></script>
+
+    <script src="js/bundle.js"></script>
+    <!-- <script  type="text/javascript" src="libs/require.js" data-main="js/bundle.js"></script> -->
 </body>
 
 </html>

@@ -1,10 +1,6 @@
-/// <reference path="../typings/paper/paper.d.ts" />
-/// <reference path="../typings/jquery/jquery.d.ts" />
-/// <reference path="../typings/jqueryui/jqueryui.d.ts" />
-
-import shapefile = require('shapefile');
-import {CanvasController} from "CanvasController";
-import Paper = require('paper'); 
+import {shapefile} from './app/shapefile';
+import {CanvasController} from "./app/CanvasController";
+import * as Paper from 'paper';
 
 $(function () {
     /*
@@ -20,6 +16,6 @@ $(function () {
     var canvas = <HTMLCanvasElement>document.getElementById('mainCanvas');
 
     let controller = new CanvasController(canvas);
-
+        
     shapefile.ShapeParser.parseFile(null);
 });

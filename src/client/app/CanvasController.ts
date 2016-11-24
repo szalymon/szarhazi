@@ -1,6 +1,4 @@
-/// <reference path="../typings/paper/paper.d.ts" />
-
-import Paper = require('paper');
+import * as Paper from 'paper';
 
 export class CanvasController {
 

@@ -1,4 +1,4 @@
-module shapefile {
+export module shapefile {
 
     const enum SHP {
         NULL = 0,
@@ -69,7 +69,6 @@ module shapefile {
 
         records: Record[];
     }
-
 
 
     export class ShapeParser {
@@ -179,8 +178,6 @@ module shapefile {
         }
     }
 }
-
-export = shapefile;
 
 
 /*
