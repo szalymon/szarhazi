@@ -1,6 +1,6 @@
 export module shapefile {
 
-    const enum SHP {
+    export const enum SHP {
         NULL = 0,
         POINT = 1,
         POLYLINE = 3,
@@ -11,10 +11,18 @@ export module shapefile {
         number: number;
         length: number;
         shape: Shape;
+
+        public toString() : String {
+            return this.shape.toString();
+        }
     }
 
     export class Shape {
         type: SHP;
+
+        public toString(): String {
+            return "Not implemented!";
+        }
     }
 
     export class Point extends Shape {
@@ -42,11 +50,18 @@ export module shapefile {
         maxY: number;
 
         parts: Int32Array;
-        points: Float64Array;
+        _points: Float64Array;
+
+        points: Point[];
 
         constructor() {
             super();
             this.type = SHP.POLYGON;
+            this.points = [];
+        }
+
+        public toString() {
+            return "Polygon with " + this.points.length + " point";
         }
     }
 
@@ -73,9 +88,22 @@ export module shapefile {
 
     export class ShapeParser {
 
-        static parseFile(file: File): World {
-            console.log('File is under parsing...');
-            return null;
+        static parseFile(file: File, callback: (world:World) => void) {
+            var reader : FileReader = new FileReader();
+            var arrayBuffer:ArrayBuffer;
+
+            reader.onload = () => {
+                arrayBuffer = reader.result;
+                var world = ShapeParser.parse(arrayBuffer, file.name);
+                console.log("World has been parsed with: ");
+                world.records.forEach(record => {
+                   console.log("\t" + record.toString()); 
+                });
+
+                callback(world);
+            };
+
+            reader.readAsArrayBuffer(file);
         }
 
         static parse(arrayBuffer: ArrayBuffer, fileName: String) {
@@ -123,7 +151,7 @@ export module shapefile {
 
         public static parseShape(dv: DataView, idx: number, length: number): Shape {
             //var i = 0, c = null;
-            var i;
+            var i: number;
             var shape: Shape;
             var shapeType = dv.getInt32(idx, true);
             idx += 4;
@@ -144,7 +172,7 @@ export module shapefile {
                     polygon.maxY = dv.getFloat64(idx + 24, true);
 
                     polygon.parts = new Int32Array(dv.getInt32(idx + 32, true));
-                    polygon.points = new Float64Array(dv.getInt32(idx + 36, true) * 2);
+                    polygon._points = new Float64Array(dv.getInt32(idx + 36, true) * 2);
 
                     idx += 40;
 
@@ -153,9 +181,17 @@ export module shapefile {
                         idx += 4;
                     }
 
-                    for (i = 0; i < polygon.points.length; i++) {
-                        polygon.points[i] = dv.getFloat64(idx, true);
+                    for (i = 0; i < polygon._points.length; i++) {
+                        polygon._points[i] = dv.getFloat64(idx, true);
                         idx += 8;
+                    }
+                    for(var k=0; k < polygon.parts.length; k++) {
+                        for(var j = polygon.parts[k], last=polygon.parts[k+1] || (polygon._points.length/2); j < last; j++) {
+                            var x = polygon._points[j*2];
+                            var y = polygon._points[j*2+1];
+
+                            polygon.points.push(new Point(x, y*(-1)));
+                        }
                     }
                     break;
 
@@ -281,7 +317,7 @@ SHPParser.prototype.parseShape = function(dv, idx, length) {
         minY: dv.getFloat64(idx+8, true),
         maxX: dv.getFloat64(idx+16, true),
         maxY: dv.getFloat64(idx+24, true),
-        parts: new Int32Array(dv.getInt32(idx+32, true)),
+        parts: new Int32Array(dv.getInt32(idx+32, trpointsue)),
         points: new Float64Array(dv.getInt32(idx+36, true)*2)
       };
       idx += 40;

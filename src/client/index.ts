@@ -1,5 +1,5 @@
-import {shapefile} from './app/shapefile';
-import {CanvasController} from "./app/CanvasController";
+import { shapefile } from './app/shapefile';
+import { CanvasController } from "./app/CanvasController";
 import * as Paper from 'paper';
 
 
@@ -12,12 +12,20 @@ $(function () {
         alert('The File APIs are not fully supported in this browser.');
     }
     */
-    console.log("Client is running...");
+
     $('#panelForDragging').draggable({ handle: ".panel-heading" });
 
     var canvas = <HTMLCanvasElement>document.getElementById('mainCanvas');
 
     let controller = new CanvasController(canvas);
 
-    shapefile.ShapeParser.parseFile(null);
+    var fileInput = <HTMLInputElement>document.getElementById("fileLoaderBtn");
+
+    fileInput.oninput = () => {
+        var file = fileInput.files[0];
+        console.log("Start loading!");
+        shapefile.ShapeParser.parseFile(file, (world) => {
+            controller.drawWorld(world);
+        });
+    }
 });
