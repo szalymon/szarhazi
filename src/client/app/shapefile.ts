@@ -205,8 +205,7 @@ export module shapefile {
                 case 25: // PolygonM
                 case 28: // MultiPointM
                 case 31: // MultiPatch
-                    throw new Error("Shape type not supported: "
-                        + shape.type);
+                    throw new Error("Shape type not supported: " + shape.type);
                 default:
                     throw new Error("Unknown shape type at " + (idx - 4) + ': ' + shape.type);
             }

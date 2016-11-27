@@ -10,6 +10,7 @@ export class CanvasController {
     paths: Paper.Path[] = [];
 
     rightMouseButtonDown: boolean;
+    leftMouseStillDown: boolean;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -18,23 +19,22 @@ export class CanvasController {
         this.path = new Paper.Path();
         this.path.fillColor = "#000000";
         this.path.fullySelected = true;
-
+        this.rightMouseButtonDown = false;
+        this.leftMouseStillDown = false;
     }
 
     protected setupCanvas(canvas: HTMLCanvasElement): void {
         Paper.setup(canvas);
         Paper.view.center = new Paper.Point(0, 0);
         Paper.view.zoom = 5;
+        var zoomConstant = 1.25;
 
         $('#zoom-out').click(() => {
-            var newValue = Paper.view.zoom - 2;
-            if (newValue > 0) {
-                Paper.view.zoom = newValue;
-            }
-            console.log(Paper.view.zoom);
+            var newValue = Paper.view.zoom * (1 / zoomConstant);
+            Paper.view.zoom = newValue;
         });
         $('#zoom-in').click(() => {
-            var newValue = Paper.view.zoom + 2;
+            var newValue = Paper.view.zoom * zoomConstant;
             Paper.view.zoom = newValue;
         });
         
