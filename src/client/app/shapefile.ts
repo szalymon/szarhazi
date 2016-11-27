@@ -78,7 +78,7 @@ export module shapefile {
             return null;
         }
 
-        static parse(arrayBuffer: ArrayBuffer, fileName) {
+        static parse(arrayBuffer: ArrayBuffer, fileName: String) {
             var world: World = new World();
             var dv = new DataView(arrayBuffer);
             var idx = 0;

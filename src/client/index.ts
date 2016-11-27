@@ -2,6 +2,8 @@ import {shapefile} from './app/shapefile';
 import {CanvasController} from "./app/CanvasController";
 import * as Paper from 'paper';
 
+
+
 $(function () {
     /*
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -16,6 +18,6 @@ $(function () {
     var canvas = <HTMLCanvasElement>document.getElementById('mainCanvas');
 
     let controller = new CanvasController(canvas);
-        
+
     shapefile.ShapeParser.parseFile(null);
 });
