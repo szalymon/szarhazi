@@ -9,7 +9,7 @@ export class CanvasController {
     canvas: HTMLCanvasElement;
     paths: Paper.Path[] = [];
 
-    middelButtonDown: boolean;
+    rightMouseButtonDown: boolean;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
@@ -24,34 +24,37 @@ export class CanvasController {
     protected setupCanvas(canvas: HTMLCanvasElement): void {
         Paper.setup(canvas);
         Paper.view.center = new Paper.Point(0, 0);
-        Paper.view.zoom = 1.5;
+        Paper.view.zoom = 5;
 
         $('#zoom-out').click(() => {
-            var newValue = Paper.view.zoom - 0.5;
+            var newValue = Paper.view.zoom - 2;
             if (newValue > 0) {
                 Paper.view.zoom = newValue;
             }
             console.log(Paper.view.zoom);
         });
         $('#zoom-in').click(() => {
-            var newValue = Paper.view.zoom + 0.5;
+            var newValue = Paper.view.zoom + 2;
             Paper.view.zoom = newValue;
         });
+        
+        $(canvas).on('contextmenu',function(){return false;});
 
         $(canvas).mousedown(e => {
-            if (e.button == 1) {
-                this.middelButtonDown = true;
+            if (e.button == 2) {
+                this.rightMouseButtonDown = true;
+                e.stopPropagation();
             }
         });
 
         $(canvas).mouseup(e => {
-            if (e.button == 1) {
-                this.middelButtonDown = false;
+            if (e.button == 2) {
+                this.rightMouseButtonDown = false;
             }
         });
 
         $(canvas).mousemove((e) => {
-            if (this.middelButtonDown) {
+            if (this.rightMouseButtonDown) {
                 var deltX = (<MouseEvent>e.originalEvent).movementX / Paper.view.zoom;
                 var deltY = (<MouseEvent>e.originalEvent).movementY / Paper.view.zoom;
 
