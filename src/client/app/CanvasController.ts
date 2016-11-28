@@ -54,7 +54,6 @@ export class CanvasController {
         $(canvas).mousedown(e => {
             if (e.button == 2) {
                 this.rightMouseButtonDown = true;
-                this.setBg();
             }
         });
 
