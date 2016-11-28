@@ -33,7 +33,7 @@ gulp.task("copy-html", function () {
     return gulp.src(paths.pages)
         .pipe(gulp.dest(paths.dist));
 });
-
+gulp.watch('src/client/**/*.html', ['copy-html']);
 
 function bundle() {
     return watchedBrowserify

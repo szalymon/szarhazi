@@ -1,7 +1,7 @@
 import { shapefile } from './app/shapefile';
 import { CanvasController } from "./app/CanvasController";
 import * as Paper from 'paper';
-
+import { WorldDrawer } from './app/WorldDrawer';
 
 
 $(function () {
@@ -25,7 +25,8 @@ $(function () {
         var file = fileInput.files[0];
         console.log("Start loading!");
         shapefile.ShapeParser.parseFile(file, (world) => {
-            controller.drawWorld(world);
+            //controller.drawWorld(world);
+            WorldDrawer.drawWorld(world);
         });
     }
 });
