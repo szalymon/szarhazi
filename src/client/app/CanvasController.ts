@@ -42,6 +42,8 @@ export class CanvasController {
             this.zoomIn();
         });
 
+        $(canvas).css("background-image", "url(http://wallpapercave.com/wp/Dq6o3uI.jpg)");
+
         $(canvas).mousewheel(e => {
             if (e.deltaY > 0) {
                 this.zoomIn();
@@ -50,7 +52,7 @@ export class CanvasController {
             }
         });
 
-        $(canvas).on('contextmenu', function () { return false; });
+        $(canvas).on('contextmenu', function() { return false; });
 
         $(canvas).mousedown(e => {
             if (e.button == 2) {
