@@ -5,6 +5,10 @@ export class WorldDrawer {
 
     canvas: HTMLCanvasElement;
 
+    static polygonBackgroundColor: string = "#AAFFAA";
+    static strokeColor: string = "#FF0000";
+    static strokeWidth: number = 0.005;
+
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
     }
@@ -19,15 +23,10 @@ export class WorldDrawer {
             } else if (record.shape.type === shapefile.SHP.POLYGON) {
                 var polygon = <shapefile.Polygon>record.shape;
                 var newPath = new Paper.Path();
-                newPath.fillColor = "#AAFFAA";
-                newPath.style.strokeColor = "#000000";
-                newPath.style.strokeWidth = 0.01;
-                newPath.onClick = (e:any) => {
-                    if(e.event.button != 2) {
-                        newPath.selected = !newPath.selected;
-                    }
-                };
-
+                newPath.fillColor = WorldDrawer.polygonBackgroundColor;
+                newPath.style.strokeColor = WorldDrawer.strokeColor;
+                newPath.style.strokeWidth = WorldDrawer.strokeWidth;
+                
                 for (var i = 0; i < polygon.points.length; ++i) {
                     var point = polygon.points[i];
                     newPath.add(new Paper.Point(point.x, point.y));
