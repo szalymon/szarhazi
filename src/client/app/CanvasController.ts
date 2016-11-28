@@ -27,17 +27,6 @@ export class CanvasController {
         Paper.view.zoom = newValue;
     }
 
-    protected setBg(){
-        var ctx = this.canvas.getContext("2d");
-        var bg = new Image();
-        bg.src = "http://hd.wallpaperswide.com/thumbs/football_pitch-t2.jpg";
-
-        // Make sure the image is loaded first otherwise nothing will draw.
-        bg.onload = function(){
-            ctx.drawImage(bg,0,0);
-        }​
-    }
-
     protected setupCanvas(canvas: HTMLCanvasElement): void {
         Paper.setup(canvas);
         Paper.view.center = new Paper.Point(0, 0);
@@ -50,7 +39,7 @@ export class CanvasController {
             this.zoomIn();
         });
 
-        $(canvas).on('drag', function(){ this.setBg(); });
+        $(canvas).css("background-image", "url(http://wallpapercave.com/wp/Dq6o3uI.jpg)");
 
         $(canvas).mousewheel(e => {
             if(e.deltaY > 0) {
