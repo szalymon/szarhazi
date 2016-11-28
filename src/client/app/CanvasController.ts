@@ -12,6 +12,7 @@ export class CanvasController {
     constructor(canvas: HTMLCanvasElement) {
         this.rightMouseButtonDown = false;
         this.leftMouseStillDown = false;
+        this.setupCanvas(canvas);
     }
 
     protected setupCanvas(canvas: HTMLCanvasElement): void {
@@ -19,7 +20,8 @@ export class CanvasController {
         Paper.view.center = new Paper.Point(0, 0);
         Paper.view.zoom = 5;
         var zoomConstant = 1.25;
-
+        //$('#mainCanvas').resizable();
+        
         $('#zoom-out').click(() => {
             var newValue = Paper.view.zoom * (1 / zoomConstant);
             Paper.view.zoom = newValue;
@@ -28,8 +30,8 @@ export class CanvasController {
             var newValue = Paper.view.zoom * zoomConstant;
             Paper.view.zoom = newValue;
         });
-        
-        $(canvas).on('contextmenu',function(){return false;});
+
+        $(canvas).on('contextmenu', function () { return false; });
 
         $(canvas).mousedown(e => {
             if (e.button == 2) {

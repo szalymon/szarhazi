@@ -8,7 +8,7 @@ var tsify = require("tsify");
 var watchify = require('watchify');
 var gutil = require('gulp-util');
 
-//var ts = require('gulp-typescript');
+var browserSync = require('browser-sync').create();
 
 var paths = {
     //tsConfig: 'src/client/tsconfig.json',
@@ -31,18 +31,34 @@ var watchedBrowserify = watchify(browserify({
 
 gulp.task("copy-html", function () {
     return gulp.src(paths.pages)
-        .pipe(gulp.dest(paths.dist));
+        .pipe(gulp.dest(paths.dist))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
 });
 gulp.watch('src/client/**/*.html', ['copy-html']);
+
+
+gulp.task('browserSync', function () {
+    browserSync.init({
+        proxy: {
+            target: "localhost:3000"
+        }
+    });
+});
+
 
 function bundle() {
     return watchedBrowserify
         .bundle()
         .pipe(source(paths.finalBundle))
-        .pipe(gulp.dest(paths.finalDest));
+        .pipe(gulp.dest(paths.finalDest))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
 }
 
-gulp.task('default', ['copy-html'], bundle);
+gulp.task('default', ['copy-html', 'browserSync'], bundle);
 watchedBrowserify.on("update", bundle);
 watchedBrowserify.on("log", gutil.log);
 

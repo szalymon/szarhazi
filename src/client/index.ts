@@ -26,7 +26,10 @@ $(function () {
         console.log("Start loading!");
         shapefile.ShapeParser.parseFile(file, (world) => {
             //controller.drawWorld(world);
+            console.log("Loading is finished!");
             WorldDrawer.drawWorld(world);
         });
     }
+
+    console.log("Page has been loaded!");
 });

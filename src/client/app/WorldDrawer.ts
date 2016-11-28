@@ -22,10 +22,12 @@ export class WorldDrawer {
                 newPath.fillColor = "#AAFFAA";
                 newPath.style.strokeColor = "#000000";
                 newPath.style.strokeWidth = 0.01;
-                newPath.onClick = (e) => {
-                    newPath.selected = !newPath.selected;
+                newPath.onClick = (e:any) => {
+                    console.log(e);
+                    if(e.event.button != 2) {
+                        newPath.selected = !newPath.selected;
+                    }
                 };
-
 
                 for (var i = 0; i < polygon.points.length; ++i) {
                     var point = polygon.points[i];

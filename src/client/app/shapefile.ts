@@ -95,11 +95,12 @@ export module shapefile {
             reader.onload = () => {
                 arrayBuffer = reader.result;
                 var world = ShapeParser.parse(arrayBuffer, file.name);
+                /*
                 console.log("World has been parsed with: ");
                 world.records.forEach(record => {
                    console.log("\t" + record.toString()); 
                 });
-
+                */
                 callback(world);
             };
 
