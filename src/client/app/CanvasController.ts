@@ -27,6 +27,17 @@ export class CanvasController {
         Paper.view.zoom = newValue;
     }
 
+    protected setBg(){
+        var ctx = this.canvas.getContext("2d");
+        var bg = new Image();
+        bg.src = "http://hd.wallpaperswide.com/thumbs/football_pitch-t2.jpg";
+
+        // Make sure the image is loaded first otherwise nothing will draw.
+        bg.onload = function(){
+            ctx.drawImage(bg,0,0);
+        }​
+    }
+
     protected setupCanvas(canvas: HTMLCanvasElement): void {
         Paper.setup(canvas);
         Paper.view.center = new Paper.Point(0, 0);
@@ -34,18 +45,12 @@ export class CanvasController {
 
         $('#zoom-out').click(() => {
             this.zoomOut();
-            /*
-            var newValue = Paper.view.zoom * (1 / zoomConstant);
-            Paper.view.zoom = newValue;
-            */
         });
         $('#zoom-in').click(() => {
             this.zoomIn();
-            /*
-            var newValue = Paper.view.zoom * this.zoomConstant;
-            Paper.view.zoom = newValue;
-            */
         });
+
+        $(canvas).on('drag', function(){ this.setBg(); });
 
         $(canvas).mousewheel(e => {
             if(e.deltaY > 0) {
@@ -55,12 +60,12 @@ export class CanvasController {
             }
         });
 
-        $(canvas).on('contextmenu', function () { return false; });
+        $(canvas).on('contextmenu', function() { return false; });
 
         $(canvas).mousedown(e => {
             if (e.button == 2) {
                 this.rightMouseButtonDown = true;
-                e.stopPropagation();
+                this.setBg();
             }
         });
 
