@@ -23,7 +23,6 @@ export class WorldDrawer {
                 newPath.style.strokeColor = "#000000";
                 newPath.style.strokeWidth = 0.01;
                 newPath.onClick = (e:any) => {
-                    console.log(e);
                     if(e.event.button != 2) {
                         newPath.selected = !newPath.selected;
                     }

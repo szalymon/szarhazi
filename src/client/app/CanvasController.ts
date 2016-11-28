@@ -9,26 +9,50 @@ export class CanvasController {
     rightMouseButtonDown: boolean;
     leftMouseStillDown: boolean;
 
+    zoomConstant: number = 1.25;
+
     constructor(canvas: HTMLCanvasElement) {
         this.rightMouseButtonDown = false;
         this.leftMouseStillDown = false;
         this.setupCanvas(canvas);
     }
 
+    protected zoomIn() {
+        var newValue = Paper.view.zoom * this.zoomConstant;
+        Paper.view.zoom = newValue;
+    }
+
+    protected zoomOut() {
+        var newValue = Paper.view.zoom * (1 / this.zoomConstant);
+        Paper.view.zoom = newValue;
+    }
+
     protected setupCanvas(canvas: HTMLCanvasElement): void {
         Paper.setup(canvas);
         Paper.view.center = new Paper.Point(0, 0);
         Paper.view.zoom = 5;
-        var zoomConstant = 1.25;
-        //$('#mainCanvas').resizable();
-        
+
         $('#zoom-out').click(() => {
+            this.zoomOut();
+            /*
             var newValue = Paper.view.zoom * (1 / zoomConstant);
             Paper.view.zoom = newValue;
+            */
         });
         $('#zoom-in').click(() => {
-            var newValue = Paper.view.zoom * zoomConstant;
+            this.zoomIn();
+            /*
+            var newValue = Paper.view.zoom * this.zoomConstant;
             Paper.view.zoom = newValue;
+            */
+        });
+
+        $(canvas).mousewheel(e => {
+            if(e.deltaY > 0) {
+                this.zoomIn();
+            } else if(e.deltaY < 0) {
+                this.zoomOut();
+            }
         });
 
         $(canvas).on('contextmenu', function () { return false; });
