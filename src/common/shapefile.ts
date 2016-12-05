@@ -119,7 +119,7 @@ export module shapefile {
             world.wordLength = dv.getInt32(idx, false);
             world.byteLength = world.wordLength * 2;
             idx += 4;
-            world.version = dv.getInt32(idx, true);            world.records = [];
+            world.version = dv.getInt32(idx, true);
             idx += 4;
             world.shapeType = dv.getInt32(idx, true);
             idx += 4;

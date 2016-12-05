@@ -32,4 +32,33 @@ $(function () {
     }
 
     console.log("Page has been loaded!");
+
+    $.get("/askforfile", function(data) {
+        WorldDrawer.drawWorld(<shapefile.World>data);
+    });
 });
+
+
+
+
+
+document.ondragover = function(event) {
+    event.preventDefault();
+}
+
+document.ondrop = function(event) {
+    var canvas = <HTMLCanvasElement>document.getElementById('mainCanvas');
+
+    event.preventDefault();
+    var reader = new FileReader();
+
+    
+
+    if(event.target == canvas) {
+        var file = event.dataTransfer.files[0];
+        console.log(file.type); 
+
+        $(canvas).css("background-image", file.name);
+    }
+}
+

@@ -42,7 +42,8 @@ export class CanvasController {
             this.zoomIn();
         });
 
-        $(canvas).css("background-image", "url(http://wallpapercave.com/wp/Dq6o3uI.jpg)");
+        //$(canvas).css("background-image", "url(http://wallpapercave.com/wp/Dq6o3uI.jpg)");
+        //$(canvas).css("background-image", "assets/78ec6304-7552-4eef-b9fb-6fe3460440ba.png");
 
         $(canvas).mousewheel(e => {
             if (e.deltaY > 0) {

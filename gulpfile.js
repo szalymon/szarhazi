@@ -10,6 +10,8 @@ var gutil = require('gulp-util');
 
 var browserSync = require('browser-sync').create();
 
+var ts = require('gulp-typescript');
+
 var paths = {
     //tsConfig: 'src/client/tsconfig.json',
     //outDev: 'dist/bundle.dev.js',
@@ -17,7 +19,9 @@ var paths = {
     pages: 'src/client/**/*.+(html|css)',
     dist: 'dist',
     finalDest: 'dist/js',
-    finalBundle: 'bundle.js'
+    finalBundle: 'bundle.js',
+    serverSrc: 'src/+(server|common)/**/*.ts',
+    serverDist: 'appserver'
 };
 
 var watchedBrowserify = watchify(browserify({
@@ -28,7 +32,7 @@ var watchedBrowserify = watchify(browserify({
     packageCache: {}
 }).plugin(tsify));
 
-
+// HTML tasks
 gulp.task("copy-html", function () {
     return gulp.src(paths.pages)
         .pipe(gulp.dest(paths.dist))
@@ -39,6 +43,7 @@ gulp.task("copy-html", function () {
 gulp.watch('src/client/**/*.html', ['copy-html']);
 
 
+// Browser synchronization
 gulp.task('browserSync', function () {
     browserSync.init({
         proxy: {
@@ -46,7 +51,6 @@ gulp.task('browserSync', function () {
         }
     });
 });
-
 
 function bundle() {
     return watchedBrowserify
@@ -61,6 +65,16 @@ function bundle() {
 gulp.task('default', ['copy-html', 'browserSync'], bundle);
 watchedBrowserify.on("update", bundle);
 watchedBrowserify.on("log", gutil.log);
+
+// Compile server
+var tsServerProject = ts.createProject('src/server/tsconfig.json');
+gulp.task('compile-server', function() {
+    var result = gulp.src(paths.serverSrc)
+    .pipe(tsServerProject());
+
+    return result.js.pipe(gulp.dest(paths.serverDist));
+});
+gulp.watch(paths.serverSrc, ['compile-server'])
 
 /*
 gulp.task("compile-client", ["copy-html"], function () {
